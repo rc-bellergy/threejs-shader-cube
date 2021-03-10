@@ -143,7 +143,9 @@ async function main () {
     const simpleMaterial = new THREE.ShaderMaterial({
         vertexShader: simpleVertexShader,
         fragmentShader: simpleFragmentShader,
-        uniforms
+        uniforms,
+        transparent: true,
+        side:THREE.DoubleSide
     })
 
     const box = new THREE.BoxGeometry(8, 8, 8)
@@ -155,8 +157,7 @@ async function main () {
     const overlayMaterial = new THREE.MeshStandardMaterial({
         transparent: true,
         opacity:0.0,
-        color: '#00ff00',
-        skinning: false
+        color: '#00ff00'
     })
     const overlayCube = new THREE.Mesh(overlayBox, overlayMaterial)
     scene.add(overlayCube)
