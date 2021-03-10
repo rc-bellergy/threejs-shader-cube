@@ -144,8 +144,8 @@ async function main () {
         vertexShader: simpleVertexShader,
         fragmentShader: simpleFragmentShader,
         uniforms,
-        transparent: true,
-        side:THREE.DoubleSide
+        // transparent: true,
+        // side:THREE.DoubleSide
     })
 
     const box = new THREE.BoxGeometry(8, 8, 8)
