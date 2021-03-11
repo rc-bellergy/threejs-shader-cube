@@ -12,6 +12,8 @@ import simple2FragmentShader from './shaders/simple2/fragment.glsl'
 import simple2VertexShader from './shaders/simple2/vertex.glsl'
 import simple3FragmentShader from './shaders/simple3/fragment.glsl'
 import simple3VertexShader from './shaders/simple3/vertex.glsl'
+import simple4FragmentShader from './shaders/simple4/fragment.glsl'
+import simple4VertexShader from './shaders/simple4/vertex.glsl'
 
 import Stats from 'three/examples/jsm/libs/stats.module.js'
 
@@ -137,8 +139,8 @@ const tick = () =>
 async function main () {
 
     const guiData = {
-        material: 'simple3Material',
-        rows: 10
+        // Default material
+        material: 'simple4Material',
     }
     const matrix3DMaterial = new THREE.ShaderMaterial({
         vertexShader: matrix3DVertexShader,
@@ -167,6 +169,11 @@ async function main () {
         fragmentShader: simple3FragmentShader,
         uniforms
     })
+    const simple4Material = new THREE.ShaderMaterial({
+        vertexShader: simple4VertexShader,
+        fragmentShader: simple4FragmentShader,
+        uniforms
+    })
 
     const box = new THREE.BoxGeometry(8, 8, 8)
     const cube = new THREE.Mesh(box, eval(guiData.material))
@@ -187,9 +194,10 @@ async function main () {
     gui.add(guiData, 'material', {
         Matrix3D: 'matrix3DMaterial',
         Matrix2D: 'matrixMaterial',
-        Simple: 'simpleMaterial',
-        Simple2: 'simple2Material',
-        Simple3: 'simple3Material'
+        Simpe_Dots: 'simpleMaterial',
+        Moving_Pattern: 'simple2Material',
+        Color_Grid: 'simple3Material',
+        Noise: 'simple4Material'
     }).onChange((e) => {
         cube.material = eval(e)
     }).name("ShaderMaterial")
