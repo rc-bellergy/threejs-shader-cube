@@ -10,11 +10,13 @@ varying vec2 vUv;
 
 void main()
 {
-    float barX = step(u_spacing * 0.5, mod(vUv.x * u_rows, 1.0));
-    barX *= step(u_spacing, mod(vUv.y * u_rows + u_spacing * 0.25, 1.0)); 
+    float margin = u_spacing * 0.25;
 
-    float barY = step(u_spacing, mod(vUv.x * u_rows + u_spacing * 0.25, 1.0));
-    barY *= step(u_spacing * 0.5, mod(vUv.y * u_rows, 1.0));
+    float barX = step(u_spacing * 0.5, mod(vUv.x * u_rows + margin, 1.0));
+    barX *= step(u_spacing, mod(vUv.y * u_rows + u_spacing * 0.25 + margin, 1.0)); 
+
+    float barY = step(u_spacing, mod(vUv.x * u_rows + u_spacing * 0.25 + margin, 1.0));
+    barY *= step(u_spacing * 0.5, mod(vUv.y * u_rows + margin, 1.0));
 
     float s = barX + barY;
 
