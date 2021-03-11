@@ -12,6 +12,8 @@ void main()
 {
     float x = floor(vUv.x * u_rows) /u_rows;
     float y = floor(vUv.y * u_rows) /u_rows;
-    float barX = step(u_spacing, mod(vUv.x * u_rows, 1.0));
-    gl_FragColor = vec4(x, y, barX, 1.0);
+    float zx = step(u_spacing, mod(vUv.x * u_rows, 1.0));
+    float zy = step(u_spacing, mod(vUv.y * u_rows, 1.0));
+    float z = zx * zy;
+    gl_FragColor = vec4(x, y, z, 1.0);
 }
