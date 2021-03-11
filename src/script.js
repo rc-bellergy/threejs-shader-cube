@@ -10,6 +10,8 @@ import simpleFragmentShader from './shaders/simple/fragment.glsl'
 import simpleVertexShader from './shaders/simple/vertex.glsl'
 import simple2FragmentShader from './shaders/simple2/fragment.glsl'
 import simple2VertexShader from './shaders/simple2/vertex.glsl'
+import simple3FragmentShader from './shaders/simple3/fragment.glsl'
+import simple3VertexShader from './shaders/simple3/vertex.glsl'
 
 import Stats from 'three/examples/jsm/libs/stats.module.js'
 
@@ -135,7 +137,7 @@ const tick = () =>
 async function main () {
 
     const guiData = {
-        material: 'simple2Material',
+        material: 'simple3Material',
         rows: 10
     }
     const matrix3DMaterial = new THREE.ShaderMaterial({
@@ -160,7 +162,11 @@ async function main () {
         fragmentShader: simple2FragmentShader,
         uniforms
     })
-    // console.log(simpleMaterial)
+    const simple3Material = new THREE.ShaderMaterial({
+        vertexShader: simple3VertexShader,
+        fragmentShader: simple3FragmentShader,
+        uniforms
+    })
 
     const box = new THREE.BoxGeometry(8, 8, 8)
     const cube = new THREE.Mesh(box, eval(guiData.material))
@@ -182,7 +188,8 @@ async function main () {
         Matrix3D: 'matrix3DMaterial',
         Matrix2D: 'matrixMaterial',
         Simple: 'simpleMaterial',
-        Simple2: 'simple2Material'
+        Simple2: 'simple2Material',
+        Simple3: 'simple3Material'
     }).onChange((e) => {
         cube.material = eval(e)
     }).name("ShaderMaterial")
