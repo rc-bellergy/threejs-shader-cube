@@ -48,7 +48,9 @@ document.body.appendChild(stats.dom)
 const uniforms = {
     u_mouse: { value: { x: window.innerWidth / 2, y: window.innerHeight / 2 } },
     u_resolution: { value: { x: window.innerWidth, y: window.innerHeight } },
-    u_time: { value: 0.0 }
+    u_time: { value: 0.0 },
+    u_rows: { value: 10.0 },
+    u_spacing: { value: 0.8 }
 }
 
 // Canvas
@@ -130,6 +132,11 @@ const tick = () =>
  */
 async function main () {
 
+    const guiData = {
+        material: 'simpleMaterial',
+        rows: 10
+    }
+
     const matrix3DMaterial = new THREE.ShaderMaterial({
         vertexShader: matrix3DVertexShader,
         fragmentShader: matrix3DFragmentShader,
@@ -147,12 +154,13 @@ async function main () {
         // transparent: true,
         // side:THREE.DoubleSide
     })
+    // console.log(simpleMaterial)
 
     const box = new THREE.BoxGeometry(8, 8, 8)
-    const cube = new THREE.Mesh(box, matrix3DMaterial)
+    const cube = new THREE.Mesh(box, eval(guiData.material))
     scene.add(cube)
 
-    // Can I apply THREE material on top of ShaderMaterial?
+    // Apply THREE material on top of ShaderMaterial
     const overlayBox = new THREE.BoxGeometry(8.01, 8.01, 8.01)
     const overlayMaterial = new THREE.MeshStandardMaterial({
         transparent: true,
@@ -162,24 +170,23 @@ async function main () {
     const overlayCube = new THREE.Mesh(overlayBox, overlayMaterial)
     scene.add(overlayCube)
     
-    // Start the loop
-    tick()
-
     // Debug UI
     const gui = new dat.GUI()
-    gui.add(overlayMaterial, 'opacity', 0, 1, 0.01).name('overlay')
-
-    const proxy = {
-        material: 'matrix3DMaterial'
-    }
-    gui.add(proxy, 'material', { 
+    gui.add(guiData, 'material', {
         Matrix3D: 'matrix3DMaterial',
-        Matrix2D: 'matrixMaterial', 
-        Simple: 'simpleMaterial' 
+        Matrix2D: 'matrixMaterial',
+        Simple: 'simpleMaterial'
     }).onChange((e) => {
         cube.material = eval(e)
     }).name("ShaderMaterial")
 
+    gui.add(uniforms.u_rows, 'value', 1, 20, 1).name('Rows')
+    gui.add(uniforms.u_spacing, 'value', 0, 1, 0.01).name('Spacing') 
+    
+    gui.add(overlayMaterial, 'opacity', 0, 1, 0.01).name('Overlay')
+
+    // Start the loop
+    tick()
 
 }
 main().catch(error => {

@@ -3,12 +3,14 @@
 #endif
 
 uniform float u_time;
+uniform float u_rows;
+uniform float u_spacing;
 
 varying vec2 vUv;
 
 void main()
 {
-    float  s = step(0.9, mod(vUv.y * 30.0 + u_time * 4.0, 1.0)); // V-line
-    s *= step(0.9, mod(vUv.x * 30.0 , 1.0)); // H-line
-    gl_FragColor = vec4(0, s, 0, s);
+    float s = step(u_spacing, mod(vUv.y * u_rows, 1.0));
+    s *= step(u_spacing, mod(vUv.x * u_rows, 1.0));
+    gl_FragColor = vec4(0.0, s, 0.0, 1.0);
 }

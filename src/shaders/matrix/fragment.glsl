@@ -7,7 +7,8 @@
 uniform vec2 u_resolution;
 uniform vec2 u_mouse;
 uniform float u_time;
-
+uniform float u_rows;
+uniform float u_spacing;
 
 float random(in float x){
     return fract(sin(x)*43758.5453);
@@ -18,7 +19,7 @@ float random(in vec2 st){
 }
 
 float rchar(in vec2 outer,in vec2 inner){
-    float grid = 5.;
+    float grid = 5. * u_spacing;
     vec2 margin = vec2(.2,.05);
     float seed = 23.;
     vec2 borders = step(margin,inner)*step(margin,1.-inner);
@@ -26,7 +27,7 @@ float rchar(in vec2 outer,in vec2 inner){
 }
 
 vec3 matrix(in vec2 st){
-    float rows = 60.0;
+    float rows = u_rows * 10.0;
     vec2 ipos = floor(st*rows);
 
     ipos += vec2(.0,floor(u_time*20.*random(ipos.x)));
