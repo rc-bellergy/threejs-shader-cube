@@ -13,9 +13,9 @@ void main()
     float margin = u_spacing * 0.25;
 
     float barX = step(u_spacing * 0.5, mod(vUv.x * u_rows + margin, 1.0));
-    barX *= step(u_spacing, mod(vUv.y * u_rows + u_spacing * 0.25 + margin, 1.0)); 
+    barX *= step(u_spacing, mod(vUv.y * u_rows + u_spacing * 0.25 + margin + u_time, 1.0)); 
 
-    float barY = step(u_spacing, mod(vUv.x * u_rows + u_spacing * 0.25 + margin, 1.0));
+    float barY = step(u_spacing, mod(vUv.x * u_rows + u_spacing * 0.25 + margin + u_time, 1.0));
     barY *= step(u_spacing * 0.5, mod(vUv.y * u_rows + margin, 1.0));
 
     float s = barX + barY;

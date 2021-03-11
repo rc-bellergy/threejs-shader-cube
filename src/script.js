@@ -187,7 +187,7 @@ async function main () {
         cube.material = eval(e)
     }).name("ShaderMaterial")
 
-    gui.add(uniforms.u_rows, 'value', 1, 20, 1).name('Rows')
+    gui.add(uniforms.u_rows, 'value', 1, 100, 1).name('Rows')
     gui.add(uniforms.u_spacing, 'value', 0, 1, 0.01).name('Spacing') 
 
     gui.add(overlayMaterial, 'opacity', 0, 1, 0.01).name('Overlay')
