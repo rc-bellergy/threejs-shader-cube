@@ -8,6 +8,8 @@ import matrix3DFragmentShader from './shaders/matrix3d/fragment.glsl'
 import matrix3DVertexShader from './shaders/matrix3d/vertex.glsl'
 import simpleFragmentShader from './shaders/simple/fragment.glsl'
 import simpleVertexShader from './shaders/simple/vertex.glsl'
+import simple2FragmentShader from './shaders/simple2/fragment.glsl'
+import simple2VertexShader from './shaders/simple2/vertex.glsl'
 
 import Stats from 'three/examples/jsm/libs/stats.module.js'
 
@@ -133,10 +135,9 @@ const tick = () =>
 async function main () {
 
     const guiData = {
-        material: 'simpleMaterial',
+        material: 'simple2Material',
         rows: 10
     }
-
     const matrix3DMaterial = new THREE.ShaderMaterial({
         vertexShader: matrix3DVertexShader,
         fragmentShader: matrix3DFragmentShader,
@@ -154,6 +155,11 @@ async function main () {
         // transparent: true,
         // side:THREE.DoubleSide
     })
+    const simple2Material = new THREE.ShaderMaterial({
+        vertexShader: simple2VertexShader,
+        fragmentShader: simple2FragmentShader,
+        uniforms
+    })
     // console.log(simpleMaterial)
 
     const box = new THREE.BoxGeometry(8, 8, 8)
@@ -164,7 +170,7 @@ async function main () {
     const overlayBox = new THREE.BoxGeometry(8.01, 8.01, 8.01)
     const overlayMaterial = new THREE.MeshStandardMaterial({
         transparent: true,
-        opacity:0.0,
+        opacity:0.1,
         color: '#00ff00'
     })
     const overlayCube = new THREE.Mesh(overlayBox, overlayMaterial)
@@ -175,15 +181,18 @@ async function main () {
     gui.add(guiData, 'material', {
         Matrix3D: 'matrix3DMaterial',
         Matrix2D: 'matrixMaterial',
-        Simple: 'simpleMaterial'
+        Simple: 'simpleMaterial',
+        Simple2: 'simple2Material'
     }).onChange((e) => {
         cube.material = eval(e)
     }).name("ShaderMaterial")
 
     gui.add(uniforms.u_rows, 'value', 1, 20, 1).name('Rows')
     gui.add(uniforms.u_spacing, 'value', 0, 1, 0.01).name('Spacing') 
-    
+
     gui.add(overlayMaterial, 'opacity', 0, 1, 0.01).name('Overlay')
+
+    gui.add(controls, 'autoRotate').name('Auto Rotate')
 
     // Start the loop
     tick()
